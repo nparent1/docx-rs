@@ -362,7 +362,7 @@ pub struct Zoom {
     #[xml(attr = "w:val")]
     pub val: Option<ZoomType>,
     #[xml(attr = "w:percent")]
-    pub percent: Option<u8>,
+    pub percent: Option<i32>,
 }
 
 #[derive(Debug, Default, Clone)]

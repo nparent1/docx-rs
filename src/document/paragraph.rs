@@ -91,7 +91,7 @@ impl<'a> Paragraph<'a> {
                 .iter()
                 .filter_map(|content| match content {
                     ParagraphContent::Run(run) => Some(run.iter_text()),
-                    ParagraphContent::Link(link) => Some(link.content.iter_text()),
+                    ParagraphContent::Link(link) => Some(link.iter_text()),
                     ParagraphContent::SDT(sdt) => Some(sdt.iter_text()),
                     _ => None,
                 })
@@ -104,7 +104,7 @@ impl<'a> Paragraph<'a> {
             .iter_mut()
             .filter_map(|content| match content {
                 ParagraphContent::Run(run) => Some(run.iter_text_mut()),
-                ParagraphContent::Link(link) => Some(link.content.iter_text_mut()),
+                ParagraphContent::Link(link) => Some(link.iter_text_mut()),
                 _ => None,
             })
             .flatten()
@@ -156,7 +156,7 @@ __xml_test_suites!(
     Paragraph::default().push(Run::default()),
     r#"<w:p><w:r/></w:p>"#,
     Paragraph::default().push(Hyperlink::default()),
-    r#"<w:p><w:hyperlink><w:r/></w:hyperlink></w:p>"#,
+    r#"<w:p><w:hyperlink/></w:p>"#,
     Paragraph::default().push(BookmarkStart::default()),
     r#"<w:p><w:bookmarkStart/></w:p>"#,
     Paragraph::default().push(BookmarkEnd::default()),

@@ -1,3 +1,4 @@
+mod bidir;
 mod body;
 mod bookmark_end;
 mod bookmark_start;
@@ -28,7 +29,6 @@ mod table_grid;
 mod table_row;
 mod text;
 mod theme;
-mod bidir;
 
 pub use self::{
     body::*, bookmark_end::*, bookmark_start::*, comment_range::*, comments::*, document::*,

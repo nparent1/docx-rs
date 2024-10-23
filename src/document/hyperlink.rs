@@ -3,7 +3,7 @@
 use hard_xml::{XmlRead, XmlWrite};
 use std::borrow::Cow;
 
-use crate::{__setter, __xml_test_suites, document::Run, document::bidir::BiDirectionalEmbedding};
+use crate::{__setter, __xml_test_suites, document::bidir::BiDirectionalEmbedding, document::Run};
 
 /// The root element of a hyperlink within the paragraph
 #[derive(Debug, Default, XmlRead, XmlWrite, Clone)]
@@ -21,7 +21,7 @@ pub struct Hyperlink<'a> {
     pub content: Option<Run<'a>>,
     #[xml(child = "w:dir")]
     // Link can contain a bi-directional embedding layer
-    pub bidirectional_embedding: Option<BiDirectionalEmbedding<'a>>
+    pub bidirectional_embedding: Option<BiDirectionalEmbedding<'a>>,
 }
 
 impl<'a> Hyperlink<'a> {
@@ -39,20 +39,25 @@ impl<'a> Hyperlink<'a> {
     pub fn iter_text(&self) -> Box<dyn Iterator<Item = &Cow<'a, str>> + '_> {
         Box::new(
             self.content.iter().flat_map(|run| run.iter_text()).chain(
-                self.bidirectional_embedding.iter().flat_map(|bidi| bidi.iter_text())
-            )
+                self.bidirectional_embedding
+                    .iter()
+                    .flat_map(|bidi| bidi.iter_text()),
+            ),
         )
     }
 
     pub fn iter_text_mut(&mut self) -> Box<dyn Iterator<Item = &mut Cow<'a, str>> + '_> {
-        Box::new(self.content.iter_mut()
-            .flat_map(|run| run.iter_text_mut())
-            .chain(
-                self.bidirectional_embedding.iter_mut().flat_map(|bidi| bidi.iter_text_mut())
-            )
+        Box::new(
+            self.content
+                .iter_mut()
+                .flat_map(|run| run.iter_text_mut())
+                .chain(
+                    self.bidirectional_embedding
+                        .iter_mut()
+                        .flat_map(|bidi| bidi.iter_text_mut()),
+                ),
         )
     }
-
 }
 
 __xml_test_suites!(

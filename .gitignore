@@ -2,6 +2,7 @@
 **/*.rs.bk
 *.docx
 Cargo.lock
+.DS_Store
 
 # IDE
 .vscode/

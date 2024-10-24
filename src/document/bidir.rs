@@ -44,7 +44,6 @@ impl<'a> BidirectionalEmbedding<'a> {
     }
 }
 
-
 __xml_test_suites!(
     BidirectionalEmbedding,
     BidirectionalEmbedding::default(),

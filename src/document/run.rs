@@ -131,8 +131,8 @@ impl<'a> Run<'a> {
         }))
     }
 
-    pub fn iter_text_mut(&mut self) -> impl Iterator<Item = &mut Cow<'a, str>> {
-        self.content.iter_mut().filter_map(|content| match content {
+    pub fn iter_text_mut(&mut self) -> Box<dyn Iterator<Item = &mut Cow<'a, str>> + '_> {
+        Box::new(self.content.iter_mut().filter_map(|content| match content {
             RunContent::Text(Text { text, .. }) => Some(text),
             RunContent::InstrText(InstrText { text, .. }) => Some(text),
             RunContent::Break(_) => None,
@@ -144,7 +144,7 @@ impl<'a> Run<'a> {
             RunContent::CarriageReturn(_) => None,
             RunContent::Drawing(_) => None,
             _ => None,
-        })
+        }))
     }
 
     pub fn replace_text_simple<S>(&mut self, old: S, new: S)

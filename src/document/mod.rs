@@ -1,3 +1,4 @@
+mod bidir;
 mod body;
 mod bookmark_end;
 mod bookmark_start;
